@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -252,7 +251,7 @@ namespace Nifscan
                         outLog.Add("WARNING! FILE NOT HAVE BLOCKS OR FILE ERROR");
                         return;
                     }
-                    for (int i = 56; i < bytesFile.Count(); i++)
+                    for (int i = 56; i < bytesFile.Length; i++)
                     {
                         if (!exportInfo)
                         {
@@ -800,6 +799,7 @@ namespace Nifscan
                                         long shaderFlags1 = BitConverter.ToUInt32(bytesFile, jump3);
                                         bool hasParallaxFlag = ((ShadeFlags1)shaderFlags1 & ShadeFlags1.SLSF1_Parallax) != 0;
                                         bool hasRefractionFlag = ((ShadeFlags1)shaderFlags1 & ShadeFlags1.SLSF1_Refraction) != 0;
+                                        bool hasSkinFlag = ((ShadeFlags1)shaderFlags1 & ShadeFlags1.SLSF1_Skinned) != 0;
                                         bool hasVAlphaFlag = ((ShadeFlags1)shaderFlags1 & ShadeFlags1.SLSF1_Vertex_Alpha) != 0;
                                         int textureSetBlock = (int)BitConverter.ToUInt32(bytesFile, jump3 + 24);
                                         bool hasPTexture = false;
@@ -872,7 +872,7 @@ namespace Nifscan
                                         {
                                             if (!checkBox4.Checked)
                                             {
-                                                outLog.Add("WARNING! TREE NOT HAVE ALPHA BUT SHADER HAVE: " + blocksNamesList[i] + " (" + i.ToString() + ") " + fileName);
+                                                outLog.Add("WARNING! ALPHA IN TREE AND ALPHA SHADER FLAG CONFLICT: " + blocksNamesList[i] + " (" + i.ToString() + ") " + fileName);
                                             }
                                             else if (hasVAlphaFlag)
                                             {
@@ -898,6 +898,10 @@ namespace Nifscan
                                                     shaderFlags1 += (1 << comboBox1.SelectedIndex);
                                                 }
                                             }
+                                        }
+                                        if ((skinBlock != -1 && !hasSkinFlag) || (skinBlock == -1 && hasSkinFlag))
+                                        {
+                                            outLog.Add("WARNING! SKIN IN TREE AND SKIN SHADER FLAG CONFLICT: " + blocksNamesList[i] + " (" + i.ToString() + ") " + fileName);
                                         }
                                         jump3 += 4;
                                         long shaderFlags2 = BitConverter.ToUInt32(bytesFile, jump3);
@@ -976,7 +980,7 @@ namespace Nifscan
                                             float c3 = floatRoundUp(jump3);
                                             jump3 += 4;
                                             float multi = BitConverter.ToSingle(bytesFile, jump3);
-                                            if (multi != 0 && c1 == 0 && c2 == 0 && c3 == 0)
+                                            if (multi != 0 && c1 == 0 && c2 == 0 && c3 == 0 && bytesFile[realBlockStart] != 2)
                                             {
                                                 replaceBytesInFile(jump3, BitConverter.GetBytes((float)0));
                                             }
