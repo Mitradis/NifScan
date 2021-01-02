@@ -800,6 +800,7 @@ namespace Nifscan
                                         bool hasParallaxFlag = ((ShadeFlags1)shaderFlags1 & ShadeFlags1.SLSF1_Parallax) != 0;
                                         bool hasRefractionFlag = ((ShadeFlags1)shaderFlags1 & ShadeFlags1.SLSF1_Refraction) != 0;
                                         bool hasSkinFlag = ((ShadeFlags1)shaderFlags1 & ShadeFlags1.SLSF1_Skinned) != 0;
+                                        bool hasSpaceNormalsFlag = ((ShadeFlags1)shaderFlags1 & ShadeFlags1.SLSF1_Model_Space_Normals) != 0;
                                         bool hasVAlphaFlag = ((ShadeFlags1)shaderFlags1 & ShadeFlags1.SLSF1_Vertex_Alpha) != 0;
                                         int textureSetBlock = (int)BitConverter.ToUInt32(bytesFile, jump3 + 24);
                                         bool hasPTexture = false;
@@ -906,6 +907,7 @@ namespace Nifscan
                                         jump3 += 4;
                                         long shaderFlags2 = BitConverter.ToUInt32(bytesFile, jump3);
                                         bool hasVCFlag = ((ShadeFlags2)shaderFlags2 & ShadeFlags2.SLSF2_Vertex_Colors) != 0;
+                                        bool hasGlowFlag = ((ShadeFlags2)shaderFlags2 & ShadeFlags2.SLSF2_Glow_Map) != 0;
                                         if (hasVColors && vcRemove && vcEmpty && (bytesFile[realBlockStart] == 0 || bytesFile[realBlockStart] == 1))
                                         {
                                             if (hasVCFlag)
@@ -929,6 +931,10 @@ namespace Nifscan
                                         if ((hasVCFlag && !hasVColors) || (!hasVCFlag && hasVColors))
                                         {
                                             outLog.Add("WARNING! VERTEX COLORS FLAGS NOT MATCH: " + blocksNamesList[i] + " (" + i.ToString() + ") " + fileName);
+                                        }
+                                        if ((bytesFile[realBlockStart] == 2 && !hasGlowFlag) || (bytesFile[realBlockStart] != 2 && hasGlowFlag))
+                                        {
+                                            outLog.Add("WARNING! GLOW TYPE SHADER NOT MATCH: " + blocksNamesList[i] + " (" + i.ToString() + ") " + fileName);
                                         }
                                         if ((checkBox8.Checked || checkBox9.Checked) && comboBox2.SelectedIndex != -1)
                                         {
@@ -991,7 +997,7 @@ namespace Nifscan
                                             jump3 += 16;
                                         }
                                         jump3 += 12;
-                                        if (bytesFile[realBlockStart] == 5 && ((ShadeFlags1)shaderFlags1 & ShadeFlags1.SLSF1_Skinned) != 0 && ((ShadeFlags1)shaderFlags1 & ShadeFlags1.SLSF1_Model_Space_Normals) != 0)
+                                        if (bytesFile[realBlockStart] == 5 && hasSkinFlag && hasSpaceNormalsFlag)
                                         {
                                             if (realBlockStart + blocksSizeList[shaderBlock] == jump3 + 40)
                                             {
