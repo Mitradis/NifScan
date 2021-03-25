@@ -538,6 +538,16 @@ namespace Nifscan
                             int jump3 = jump2 + 4 + ((int)BitConverter.ToUInt32(bytesFile, jump2) * 4) + 6;
                             sortBlocks(realBlockStart, jump, childs, realBlockStart + blocksSizeList[i], jump3, i, blocksNamesList[i]);
                         }
+                        else if (blocksNamesList[i] == "NiTransformController")
+                        {
+                            int jump = realBlockStart + 14;
+                            float start = BitConverter.ToSingle(bytesFile, jump);
+                            float stop = BitConverter.ToSingle(bytesFile, jump + 4);
+                            if (start >= stop || stop <= 0)
+                            {
+                                outLog.Add("WARNING! ANIMATION NOT WORK: " + blocksNamesList[i] + " (" + i.ToString() + ") " + fileName);
+                            }
+                        }
                         else if (blocksNamesList[i].StartsWith("bhk"))
                         {
                             if (blocksNamesList[i] == "bhkRigidBody" || blocksNamesList[i] == "bhkRigidBodyT")
