@@ -1061,9 +1061,9 @@ namespace Nifscan
             int controller = (int)BitConverter.ToUInt32(bytesFile, jump1);
             if (controller != -1 && (blocksNamesList[controller] == "NiTransformController" || blocksNamesList[controller] == "NiKeyframeController" || blocksNamesList[controller] == "BSKeyframeController"))
             {
-                int jump2 = blockStart + 14;
-                float start = BitConverter.ToSingle(bytesFile, jump);
-                float stop = BitConverter.ToSingle(bytesFile, jump + 4);
+                int jump2 = blocksStartList[controller] + 14;
+                float start = BitConverter.ToSingle(bytesFile, jump2);
+                float stop = BitConverter.ToSingle(bytesFile, jump2 + 4);
                 if (start >= stop || stop <= 0)
                 {
                     if (checkBox4.Checked)
