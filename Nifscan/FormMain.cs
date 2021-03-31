@@ -39,7 +39,6 @@ namespace Nifscan
         public static float verZval = 0;
         internal static FormMain formMain = null;
         List<string> outLog = new List<string>();
-        List<string> blocksNamesList = new List<string>();
         List<int> blocksSizeList = new List<int>();
         List<int> blocksStartList = new List<int>();
         List<int> sizeIndex = new List<int>();
@@ -181,7 +180,6 @@ namespace Nifscan
                 {
                     currentFile(line);
                     totalFiles++;
-                    blocksNamesList.Clear();
                     blocksSizeList.Clear();
                     blocksStartList.Clear();
                     sizeIndex.Clear();
@@ -208,6 +206,7 @@ namespace Nifscan
             if (File.Exists(path))
             {
                 List<string> blocksTypesList = new List<string>();
+                List<string> blocksNamesList = new List<string>();
                 List<string> stringsList = new List<string>();
                 List<uint> groupsList = new List<uint>();
                 outLog.Add("");
@@ -412,7 +411,7 @@ namespace Nifscan
                         int realBlockStart = blocksStartList[i];
                         if (blocksNamesList[i] == "NiNode" || blocksNamesList[i] == "AvoidNode" || blocksNamesList[i] == "BSFadeNode" || blocksNamesList[i] == "BSLeafAnimNode" || blocksNamesList[i] == "RootCollisionNode" || blocksNamesList[i] == "NiBSAnimationNode" || blocksNamesList[i] == "NiBSParticleNode" || blocksNamesList[i] == "NiBone")
                         {
-                            int jump = realBlockStart + 72 + ((int)BitConverter.ToUInt32(bytesFile, realBlockStart + 4) * 4);
+                            int jump = realBlockStart + 68 + ((bytesFile[realBlockStart + 4] + 1) * 4);
                             int childs = (int)BitConverter.ToUInt32(bytesFile, jump);
                             int jump2 = jump + 4 + (childs * 4);
                             int jump3 = jump2 + 4 + ((int)BitConverter.ToUInt32(bytesFile, jump2) * 4);
@@ -420,7 +419,7 @@ namespace Nifscan
                         }
                         else if (blocksNamesList[i] == "BSBlastNode" || blocksNamesList[i] == "BSDamageStage" || blocksNamesList[i] == "BSDebrisNode" || blocksNamesList[i] == "BSRangeNode")
                         {
-                            int jump = realBlockStart + 72 + ((int)BitConverter.ToUInt32(bytesFile, realBlockStart + 4) * 4);
+                            int jump = realBlockStart + 68 + ((bytesFile[realBlockStart + 4] + 1) * 4);
                             int childs = (int)BitConverter.ToUInt32(bytesFile, jump);
                             int jump2 = jump + 4 + (childs * 4);
                             int jump3 = jump2 + 4 + ((int)BitConverter.ToUInt32(bytesFile, jump2) * 4) + 3;
@@ -428,7 +427,7 @@ namespace Nifscan
                         }
                         else if (blocksNamesList[i] == "BSMasterParticleSystem")
                         {
-                            int jump = realBlockStart + 72 + ((int)BitConverter.ToUInt32(bytesFile, realBlockStart + 4) * 4);
+                            int jump = realBlockStart + 68 + ((bytesFile[realBlockStart + 4] + 1) * 4);
                             int childs = (int)BitConverter.ToUInt32(bytesFile, jump);
                             int jump2 = jump + 4 + (childs * 4);
                             int jump3 = jump2 + 4 + ((int)BitConverter.ToUInt32(bytesFile, jump2) * 4) + 2;
@@ -437,7 +436,7 @@ namespace Nifscan
                         }
                         else if (blocksNamesList[i] == "BSMultiBoundNode")
                         {
-                            int jump = realBlockStart + 72 + ((int)BitConverter.ToUInt32(bytesFile, realBlockStart + 4) * 4);
+                            int jump = realBlockStart + 68 + ((bytesFile[realBlockStart + 4] + 1) * 4);
                             int childs = (int)BitConverter.ToUInt32(bytesFile, jump);
                             int jump2 = jump + 4 + (childs * 4);
                             int jump3 = jump2 + 4 + ((int)BitConverter.ToUInt32(bytesFile, jump2) * 4) + 8;
@@ -445,7 +444,7 @@ namespace Nifscan
                         }
                         else if (blocksNamesList[i] == "BSOrderedNode")
                         {
-                            int jump = realBlockStart + 72 + ((int)BitConverter.ToUInt32(bytesFile, realBlockStart + 4) * 4);
+                            int jump = realBlockStart + 68 + ((bytesFile[realBlockStart + 4] + 1) * 4);
                             int childs = (int)BitConverter.ToUInt32(bytesFile, jump);
                             int jump2 = jump + 4 + (childs * 4);
                             int jump3 = jump2 + 4 + ((int)BitConverter.ToUInt32(bytesFile, jump2) * 4) + 17;
@@ -453,7 +452,7 @@ namespace Nifscan
                         }
                         else if (blocksNamesList[i] == "BSTreeNode")
                         {
-                            int jump = realBlockStart + 72 + ((int)BitConverter.ToUInt32(bytesFile, realBlockStart + 4) * 4);
+                            int jump = realBlockStart + 68 + ((bytesFile[realBlockStart + 4] + 1) * 4);
                             int childs = (int)BitConverter.ToUInt32(bytesFile, jump);
                             int jump2 = jump + 4 + (childs * 4);
                             int jump3 = jump2 + 4 + ((int)BitConverter.ToUInt32(bytesFile, jump2) * 4);
@@ -463,7 +462,7 @@ namespace Nifscan
                         }
                         else if (blocksNamesList[i] == "BSValueNode")
                         {
-                            int jump = realBlockStart + 72 + ((int)BitConverter.ToUInt32(bytesFile, realBlockStart + 4) * 4);
+                            int jump = realBlockStart + 68 + ((bytesFile[realBlockStart + 4] + 1) * 4);
                             int childs = (int)BitConverter.ToUInt32(bytesFile, jump);
                             int jump2 = jump + 4 + (childs * 4);
                             int jump3 = jump2 + 4 + ((int)BitConverter.ToUInt32(bytesFile, jump2) * 4) + 5;
@@ -471,7 +470,7 @@ namespace Nifscan
                         }
                         else if (blocksNamesList[i] == "FxButton" || blocksNamesList[i] == "FxWidget")
                         {
-                            int jump = realBlockStart + 72 + ((int)BitConverter.ToUInt32(bytesFile, realBlockStart + 4) * 4);
+                            int jump = realBlockStart + 68 + ((bytesFile[realBlockStart + 4] + 1) * 4);
                             int childs = (int)BitConverter.ToUInt32(bytesFile, jump);
                             int jump2 = jump + 4 + (childs * 4);
                             int jump3 = jump2 + 4 + ((int)BitConverter.ToUInt32(bytesFile, jump2) * 4) + 293;
@@ -479,7 +478,7 @@ namespace Nifscan
                         }
                         else if (blocksNamesList[i] == "FxRadioButton")
                         {
-                            int jump = realBlockStart + 72 + ((int)BitConverter.ToUInt32(bytesFile, realBlockStart + 4) * 4);
+                            int jump = realBlockStart + 68 + ((bytesFile[realBlockStart + 4] + 1) * 4);
                             int childs = (int)BitConverter.ToUInt32(bytesFile, jump);
                             int jump2 = jump + 4 + (childs * 4);
                             int jump3 = jump2 + 4 + ((int)BitConverter.ToUInt32(bytesFile, jump2) * 4) + 305;
@@ -488,7 +487,7 @@ namespace Nifscan
                         }
                         else if (blocksNamesList[i] == "NiBillboardNode")
                         {
-                            int jump = realBlockStart + 72 + ((int)BitConverter.ToUInt32(bytesFile, realBlockStart + 4) * 4);
+                            int jump = realBlockStart + 68 + ((bytesFile[realBlockStart + 4] + 1) * 4);
                             int childs = (int)BitConverter.ToUInt32(bytesFile, jump);
                             int jump2 = jump + 4 + (childs * 4);
                             int jump3 = jump2 + 4 + ((int)BitConverter.ToUInt32(bytesFile, jump2) * 4) + 2;
@@ -496,7 +495,7 @@ namespace Nifscan
                         }
                         else if (blocksNamesList[i] == "NiLODNode")
                         {
-                            int jump = realBlockStart + 72 + ((int)BitConverter.ToUInt32(bytesFile, realBlockStart + 4) * 4);
+                            int jump = realBlockStart + 68 + ((bytesFile[realBlockStart + 4] + 1) * 4);
                             int childs = (int)BitConverter.ToUInt32(bytesFile, jump);
                             int jump2 = jump + 4 + (childs * 4);
                             int jump3 = jump2 + 4 + ((int)BitConverter.ToUInt32(bytesFile, jump2) * 4) + 10;
@@ -504,7 +503,7 @@ namespace Nifscan
                         }
                         else if (blocksNamesList[i] == "NiRoom")
                         {
-                            int jump = realBlockStart + 72 + ((int)BitConverter.ToUInt32(bytesFile, realBlockStart + 4) * 4);
+                            int jump = realBlockStart + 68 + ((bytesFile[realBlockStart + 4] + 1) * 4);
                             int childs = (int)BitConverter.ToUInt32(bytesFile, jump);
                             int jump2 = jump + 4 + (childs * 4);
                             int jump3 = jump2 + 4 + ((int)BitConverter.ToUInt32(bytesFile, jump2) * 4);
@@ -516,7 +515,7 @@ namespace Nifscan
                         }
                         else if (blocksNamesList[i] == "NiRoomGroup")
                         {
-                            int jump = realBlockStart + 72 + ((int)BitConverter.ToUInt32(bytesFile, realBlockStart + 4) * 4);
+                            int jump = realBlockStart + 68 + ((bytesFile[realBlockStart + 4] + 1) * 4);
                             int childs = (int)BitConverter.ToUInt32(bytesFile, jump);
                             int jump2 = jump + 4 + (childs * 4);
                             int jump3 = jump2 + 4 + ((int)BitConverter.ToUInt32(bytesFile, jump2) * 4) + 4;
@@ -525,7 +524,7 @@ namespace Nifscan
                         }
                         else if (blocksNamesList[i] == "NiSortAdjustNode")
                         {
-                            int jump = realBlockStart + 72 + ((int)BitConverter.ToUInt32(bytesFile, realBlockStart + 4) * 4);
+                            int jump = realBlockStart + 68 + ((bytesFile[realBlockStart + 4] + 1) * 4);
                             int childs = (int)BitConverter.ToUInt32(bytesFile, jump);
                             int jump2 = jump + 4 + (childs * 4);
                             int jump3 = jump2 + 4 + ((int)BitConverter.ToUInt32(bytesFile, jump2) * 4) + 4;
@@ -533,7 +532,7 @@ namespace Nifscan
                         }
                         else if (blocksNamesList[i] == "NiSwitchNode")
                         {
-                            int jump = realBlockStart + 72 + ((int)BitConverter.ToUInt32(bytesFile, realBlockStart + 4) * 4);
+                            int jump = realBlockStart + 68 + ((bytesFile[realBlockStart + 4] + 1) * 4);
                             int childs = (int)BitConverter.ToUInt32(bytesFile, jump);
                             int jump2 = jump + 4 + (childs * 4);
                             int jump3 = jump2 + 4 + ((int)BitConverter.ToUInt32(bytesFile, jump2) * 4) + 6;
@@ -591,14 +590,14 @@ namespace Nifscan
                                 }
                                 else if (blocksNamesList[i] == "bhkListShape" || blocksNamesList[i] == "bhkConvexListShape")
                                 {
-                                    int jump = realBlockStart + 4 + ((int)BitConverter.ToUInt32(bytesFile, realBlockStart) * 4);
+                                    int jump = realBlockStart + ((bytesFile[realBlockStart] + 1) * 4);
                                     checkCollisions(jump, BitConverter.ToUInt32(bytesFile, jump));
                                 }
                                 else if (blocksNamesList[i] == "bhkCompressedMeshShapeData")
                                 {
-                                    int jump1 = realBlockStart + 58 + ((int)BitConverter.ToUInt32(bytesFile, realBlockStart + 54) * 4);
-                                    int jump2 = jump1 + 4 + ((int)BitConverter.ToUInt32(bytesFile, jump1) * 4);
-                                    int jump3 = jump2 + 4 + ((int)BitConverter.ToUInt32(bytesFile, jump2) * 4);
+                                    int jump1 = realBlockStart + 54 + ((bytesFile[realBlockStart + 54] + 1) * 4);
+                                    int jump2 = jump1 + ((bytesFile[jump1] + 1) * 4);
+                                    int jump3 = jump2 + ((bytesFile[jump2] + 1) * 4);
                                     int count = bytesFile[jump3];
                                     jump3 += 4;
                                     for (int j = 0; j < count; j++)
@@ -989,7 +988,7 @@ namespace Nifscan
                                             float multi = BitConverter.ToSingle(bytesFile, jump3);
                                             if (multi != 0 && c1 == 0 && c2 == 0 && c3 == 0 && bytesFile[realBlockStart] != 2)
                                             {
-                                                replaceBytesInFile(jump3, BitConverter.GetBytes(0));
+                                                replaceBytesInFile(jump3, BitConverter.GetBytes((float)0));
                                             }
                                             jump3 += 4;
                                         }
@@ -1057,26 +1056,6 @@ namespace Nifscan
 
         private void sortBlocks(int blockStart, int jump, int childs, int blockSize, int blockEnd, int blockIndex, string name)
         {
-            int jump1 = blockStart + 8 + ((int)BitConverter.ToUInt32(bytesFile, blockStart + 4) * 4);
-            int controller = (int)BitConverter.ToUInt32(bytesFile, jump1);
-            if (controller != -1 && (blocksNamesList[controller] == "NiTransformController" || blocksNamesList[controller] == "NiKeyframeController" || blocksNamesList[controller] == "BSKeyframeController"))
-            {
-                int jump2 = blocksStartList[controller] + 14;
-                float start = BitConverter.ToSingle(bytesFile, jump2);
-                float stop = BitConverter.ToSingle(bytesFile, jump2 + 4);
-                if (start >= stop || stop <= 0)
-                {
-                    if (checkBox4.Checked)
-                    {
-                        replaceBytesInFile(jump1, BitConverter.GetBytes(-1));
-                        outLog.Add("WARNING! UNUSED ANIMATION BLOCK DETACHED: " + blocksNamesList[controller] + " (" + controller.ToString() + ") " + fileName);
-                    }
-                    else
-                    {
-                        outLog.Add("WARNING! UNUSED ANIMATION BLOCK: " + blocksNamesList[controller] + " (" + controller.ToString() + ") " + fileName);
-                    }
-                }
-            }
             if (childs > 0)
             {
                 List<int> childsList = new List<int>();
