@@ -139,7 +139,7 @@
             this.checkBox6.Size = new System.Drawing.Size(179, 25);
             this.checkBox6.TabIndex = 11;
             this.checkBox6.Text = "Replace collision material:";
-            this.checkBox6.CheckedChanged += new System.EventHandler(this.checkBox5_CheckedChanged);
+            this.checkBox6.CheckedChanged += new System.EventHandler(this.checkBox6_CheckedChanged);
             // 
             // checkBox2
             // 
@@ -188,11 +188,11 @@
             // button5
             // 
             this.button5.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button5.Location = new System.Drawing.Point(159, 84);
+            this.button5.Location = new System.Drawing.Point(142, 84);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(103, 30);
+            this.button5.Size = new System.Drawing.Size(137, 30);
             this.button5.TabIndex = 9;
-            this.button5.Text = "Parallax";
+            this.button5.Text = "Parallax / Textures";
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // label13
@@ -270,7 +270,7 @@
             this.checkBox7.Size = new System.Drawing.Size(55, 20);
             this.checkBox7.TabIndex = 14;
             this.checkBox7.Text = "Add";
-            this.checkBox7.CheckedChanged += new System.EventHandler(this.checkBox6_CheckedChanged);
+            this.checkBox7.CheckedChanged += new System.EventHandler(this.checkBox7_CheckedChanged);
             // 
             // checkBox9
             // 
@@ -281,7 +281,7 @@
             this.checkBox9.Size = new System.Drawing.Size(55, 20);
             this.checkBox9.TabIndex = 17;
             this.checkBox9.Text = "Add";
-            this.checkBox9.CheckedChanged += new System.EventHandler(this.checkBox8_CheckedChanged);
+            this.checkBox9.CheckedChanged += new System.EventHandler(this.checkBox9_CheckedChanged);
             // 
             // checkBox8
             // 
@@ -292,7 +292,7 @@
             this.checkBox8.Size = new System.Drawing.Size(80, 20);
             this.checkBox8.TabIndex = 15;
             this.checkBox8.Text = "Remove";
-            this.checkBox8.CheckedChanged += new System.EventHandler(this.checkBox7_CheckedChanged);
+            this.checkBox8.CheckedChanged += new System.EventHandler(this.checkBox8_CheckedChanged);
             // 
             // checkBox10
             // 
@@ -303,7 +303,7 @@
             this.checkBox10.Size = new System.Drawing.Size(80, 20);
             this.checkBox10.TabIndex = 18;
             this.checkBox10.Text = "Remove";
-            this.checkBox10.CheckedChanged += new System.EventHandler(this.checkBox9_CheckedChanged);
+            this.checkBox10.CheckedChanged += new System.EventHandler(this.checkBox10_CheckedChanged);
             // 
             // label2
             // 

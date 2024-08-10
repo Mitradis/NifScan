@@ -57,7 +57,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(216, 60);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Fix NPC packages CTDA. Parse same as RNAM data.";
+            this.label2.Text = "Restore NPC packages CTDA data. Parse same as RNAM data.";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // button2
@@ -87,8 +87,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(216, 60);
             this.label3.TabIndex = 1;
-            this.label3.Text = "Resort form`s in reverse order after TES5Edit saving, for all esp\\esm files in Da" +
-    "ta folder.";
+            this.label3.Text = "Resort form`s in reverse order, needed only for master files.";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // FormES

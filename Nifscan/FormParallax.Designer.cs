@@ -34,12 +34,12 @@
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(12, 25);
+            this.textBox1.Location = new System.Drawing.Point(12, 41);
             this.textBox1.MaxLength = 999999999;
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(540, 222);
+            this.textBox1.Size = new System.Drawing.Size(540, 206);
             this.textBox1.TabIndex = 0;
             // 
             // label1
@@ -47,9 +47,10 @@
             this.label1.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.Location = new System.Drawing.Point(12, 2);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(540, 21);
+            this.label1.Size = new System.Drawing.Size(540, 36);
             this.label1.TabIndex = 0;
-            this.label1.Text = "List of _n.dds textures for which is necessary set parallax flags:";
+            this.label1.Text = "List of _n.dds textures for which is necessary set parallax flags,\r\nor _n.dds tex" +
+    "tures for which need to add/remove shader`s flags:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // button1

@@ -1115,7 +1115,7 @@ namespace NifScan
                                                 outLog.Add("WARNING! DOUBLE DECAL FLAGS: " + blocksNamesList[i] + " (" + i + ") " + fileName);
                                             }
                                         }
-                                        if ((checkBox7.Checked || checkBox8.Checked) && comboBox1.SelectedIndex != -1)
+                                        if ((checkBox7.Checked || checkBox8.Checked) && comboBox1.SelectedIndex != -1 && (texturesList.Count < 1 || (normal != null && texturesList.Exists(s => s.Equals(normal, StringComparison.OrdinalIgnoreCase)))))
                                         {
                                             if (((ShadeFlags1)shaderFlags1 & (ShadeFlags1)(1 << comboBox1.SelectedIndex)) != 0)
                                             {
@@ -1218,7 +1218,7 @@ namespace NifScan
                                                 outLog.Add("WARNING! HAS SOFTLIGHTING FLAG BUT TEXTURE NOT: " + blocksNamesList[i] + " (" + i + ") " + fileName);
                                             }
                                         }
-                                        if ((checkBox9.Checked || checkBox10.Checked) && comboBox2.SelectedIndex != -1)
+                                        if ((checkBox9.Checked || checkBox10.Checked) && comboBox2.SelectedIndex != -1 && (texturesList.Count < 1 || (normal != null && texturesList.Exists(s => s.Equals(normal, StringComparison.OrdinalIgnoreCase)))))
                                         {
                                             if (((ShadeFlags2)shaderFlags2 & (ShadeFlags2)(1 << comboBox2.SelectedIndex)) != 0)
                                             {
@@ -2215,13 +2215,13 @@ namespace NifScan
             debugMode = !debugMode;
         }
 
-        void checkBox5_CheckedChanged(object sender, EventArgs e)
+        void checkBox6_CheckedChanged(object sender, EventArgs e)
         {
             textBox1.Enabled = checkBox6.Checked;
             textBox2.Enabled = checkBox6.Checked;
         }
 
-        void checkBox6_CheckedChanged(object sender, EventArgs e)
+        void checkBox7_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox7.Checked)
             {
@@ -2229,7 +2229,7 @@ namespace NifScan
             }
         }
 
-        void checkBox7_CheckedChanged(object sender, EventArgs e)
+        void checkBox8_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox8.Checked)
             {
@@ -2237,7 +2237,7 @@ namespace NifScan
             }
         }
 
-        void checkBox8_CheckedChanged(object sender, EventArgs e)
+        void checkBox9_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox9.Checked)
             {
@@ -2245,7 +2245,7 @@ namespace NifScan
             }
         }
 
-        void checkBox9_CheckedChanged(object sender, EventArgs e)
+        void checkBox10_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox10.Checked)
             {
