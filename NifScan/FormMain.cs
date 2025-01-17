@@ -800,7 +800,7 @@ namespace NifScan
                                         {
                                             if (checkBox4.Checked)
                                             {
-                                                vectorFlags -= 4096;
+                                                vectorFlags -= (long)VectorFlags.Has_Tangents;
                                                 replaceBytesInFile(vFlags, BitConverter.GetBytes(vectorFlags));
                                                 hasTangents = false;
                                                 resizeByteArray(tangentsStart, numVertices * 24, dataBlock);
@@ -1052,14 +1052,14 @@ namespace NifScan
                                     if (!parallaxInvert && bytesFile[realBlockStart] == 0 && !hasParallaxFlag && skinBlock == -1)
                                     {
                                         bytesFile[realBlockStart] = 3;
-                                        shaderFlags1 += 2048;
+                                        shaderFlags1 += (long)ShadeFlags1.SLSF1_Parallax;
                                         replaceBytesInFile(jump3, BitConverter.GetBytes(shaderFlags1));
                                         hasParallaxFlag = true;
                                     }
                                     else if (parallaxInvert && bytesFile[realBlockStart] == 3 && hasParallaxFlag)
                                     {
                                         bytesFile[realBlockStart] = 0;
-                                        shaderFlags1 -= 2048;
+                                        shaderFlags1 -= (long)ShadeFlags1.SLSF1_Parallax;
                                         replaceBytesInFile(jump3, BitConverter.GetBytes(shaderFlags1));
                                         hasParallaxFlag = false;
                                     }
@@ -1069,14 +1069,14 @@ namespace NifScan
                                     bytesFile[realBlockStart] = 0;
                                     if (hasParallaxFlag)
                                     {
-                                        shaderFlags1 -= 2048;
+                                        shaderFlags1 -= (long)ShadeFlags1.SLSF1_Parallax;
                                         replaceBytesInFile(jump3, BitConverter.GetBytes(shaderFlags1));
                                         hasParallaxFlag = false;
                                     }
                                 }
                                 if (checkBox4.Checked && bytesFile[realBlockStart] == 3 && hasPTexture && !hasParallaxFlag)
                                 {
-                                    shaderFlags1 += 2048;
+                                    shaderFlags1 += (long)ShadeFlags1.SLSF1_Parallax;
                                     replaceBytesInFile(jump3, BitConverter.GetBytes(shaderFlags1));
                                     hasParallaxFlag = true;
                                 }
@@ -1088,7 +1088,7 @@ namespace NifScan
                                 {
                                     if (checkBox4.Checked)
                                     {
-                                        shaderFlags1 -= 512;
+                                        shaderFlags1 -= (long)ShadeFlags1.SLSF1_Cast_Shadows;
                                         replaceBytesInFile(jump3, BitConverter.GetBytes(shaderFlags1));
                                         hasCastShadowFlag = false;
                                     }
@@ -1101,7 +1101,7 @@ namespace NifScan
                                 {
                                     if (checkBox4.Checked)
                                     {
-                                        shaderFlags1 -= 8;
+                                        shaderFlags1 -= (long)ShadeFlags1.SLSF1_Vertex_Alpha;
                                         replaceBytesInFile(jump3, BitConverter.GetBytes(shaderFlags1));
                                         hasVAlphaFlag = false;
                                     }
@@ -1114,7 +1114,7 @@ namespace NifScan
                                 {
                                     if (checkBox4.Checked)
                                     {
-                                        shaderFlags1 -= 134217728;
+                                        shaderFlags1 -= (long)ShadeFlags1.SLSF1_Dynamic_Decal;
                                         replaceBytesInFile(jump3, BitConverter.GetBytes(shaderFlags1));
                                         hasDynDecalFlag = false;
                                     }
@@ -1145,12 +1145,12 @@ namespace NifScan
                                 if (checkBox4.Checked && hasEyeEnvMapFlag && bytesFile[realBlockStart] == 16)
                                 {
                                     bytesFile[realBlockStart] = 1;
-                                    shaderFlags1 -= 131072;
+                                    shaderFlags1 -= (long)ShadeFlags1.SLSF1_Eye_Environment_Mapping;
                                     replaceBytesInFile(jump3, BitConverter.GetBytes(shaderFlags1));
                                     hasEyeEnvMapFlag = false;
                                     if (!hasEnvMapFlag)
                                     {
-                                        shaderFlags1 += 128;
+                                        shaderFlags1 += (long)ShadeFlags1.SLSF1_Environment_Mapping;
                                         replaceBytesInFile(jump3, BitConverter.GetBytes(shaderFlags1));
                                         hasEnvMapFlag = true;
                                     }
@@ -1176,20 +1176,34 @@ namespace NifScan
                                 jump3 += 4;
                                 long shaderFlags2 = BitConverter.ToUInt32(bytesFile, jump3);
                                 bool hasAnisotropicLightingFlag = ((ShadeFlags2)shaderFlags2 & ShadeFlags2.SLSF2_Anisotropic_Lighting) != 0;
+                                bool hasNoFade = ((ShadeFlags2)shaderFlags2 & ShadeFlags2.SLSF2_No_Fade) != 0;
                                 bool hasGlowFlag = ((ShadeFlags2)shaderFlags2 & ShadeFlags2.SLSF2_Glow_Map) != 0;
                                 bool hasSoftLightingFlag = ((ShadeFlags2)shaderFlags2 & ShadeFlags2.SLSF2_Soft_Lighting) != 0;
                                 bool hasVCFlag = ((ShadeFlags2)shaderFlags2 & ShadeFlags2.SLSF2_Vertex_Colors) != 0;
                                 if (checkBox4.Checked && bytesFile[realBlockStart] == 3 && hasPTexture && !hasVCFlag)
                                 {
-                                    shaderFlags2 += 32;
+                                    shaderFlags2 += (long)ShadeFlags2.SLSF2_Vertex_Colors;
                                     replaceBytesInFile(jump3, BitConverter.GetBytes(shaderFlags2));
                                     hasVCFlag = true;
+                                }
+                                if (!hasDecalFlag && !hasDynDecalFlag && hasNoFade)
+                                {
+                                    if (checkBox4.Checked)
+                                    {
+                                        shaderFlags2 -= (long)ShadeFlags2.SLSF2_No_Fade;
+                                        replaceBytesInFile(jump3, BitConverter.GetBytes(shaderFlags2));
+                                        hasNoFade = false;
+                                    }
+                                    else
+                                    {
+                                        outLog.Add("WARNING! NOFADE FLAG BUT NO DECAL: " + blocksNamesList[i] + " (" + i + ") " + fileName);
+                                    }
                                 }
                                 if (hasVColors && vcRemove && vcEmpty && bytesFile[realBlockStart] != 3 && bytesFile[realBlockStart] >= 0 && bytesFile[realBlockStart] <= 6)
                                 {
                                     if (hasVCFlag)
                                     {
-                                        shaderFlags2 -= 32;
+                                        shaderFlags2 -= (long)ShadeFlags2.SLSF2_Vertex_Colors;
                                         replaceBytesInFile(jump3, BitConverter.GetBytes(shaderFlags2));
                                         hasVCFlag = false;
                                     }
@@ -1217,7 +1231,7 @@ namespace NifScan
                                 {
                                     if (checkBox4.Checked)
                                     {
-                                        shaderFlags2 -= 33554432;
+                                        shaderFlags2 -= (long)ShadeFlags2.SLSF2_Soft_Lighting;
                                         replaceBytesInFile(jump3, BitConverter.GetBytes(shaderFlags2));
                                         hasSoftLightingFlag = false;
                                     }
@@ -1249,13 +1263,13 @@ namespace NifScan
                                 {
                                     if (checkHair && hasAnisotropicLightingFlag)
                                     {
-                                        shaderFlags2 -= 2097152;
+                                        shaderFlags2 -= (long)ShadeFlags2.SLSF2_Anisotropic_Lighting;
                                         replaceBytesInFile(jump3, BitConverter.GetBytes(shaderFlags2));
                                         hasAnisotropicLightingFlag = false;
                                     }
                                     else if (checkMouth && !hasAnisotropicLightingFlag && hasSpecular)
                                     {
-                                        shaderFlags2 += 2097152;
+                                        shaderFlags2 += (long)ShadeFlags2.SLSF2_Anisotropic_Lighting;
                                         replaceBytesInFile(jump3, BitConverter.GetBytes(shaderFlags2));
                                         hasAnisotropicLightingFlag = true;
                                     }
@@ -1333,7 +1347,7 @@ namespace NifScan
                                 {
                                     if (!hasSpecular)
                                     {
-                                        shaderFlags1 += 1;
+                                        shaderFlags1 += (long)ShadeFlags1.SLSF1_Specular;
                                         replaceBytesInFile(shader1, BitConverter.GetBytes(shaderFlags1));
                                         hasSpecular = true;
                                     }
